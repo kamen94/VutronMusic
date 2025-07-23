@@ -160,15 +160,21 @@ const watchOsdEvent = () => {
   watch(
     show,
     (value) => {
-      window.mainApi?.send('updateOsdState', { show: value })
+      if (typeof value === 'boolean') {
+        window.mainApi?.send('updateOsdState', { show: value })
+      }
     },
     { immediate: true }
   )
   watch(type, (value) => {
-    window.mainApi?.send('updateOsdState', { type: value })
+    if (typeof value === 'boolean') {
+      window.mainApi?.send('updateOsdState', { type: value })
+    }
   })
   watch(isLock, (value) => {
-    window.mainApi?.send('updateOsdState', { isLock: value })
+    if (typeof value === 'boolean') {
+      window.mainApi?.send('updateOsdState', { isLock: value })
+    }
   })
 }
 
@@ -204,7 +210,9 @@ const scanLocalMusic = async () => {
 provide('scanLocalMusic', scanLocalMusic)
 
 const handleChanelEvent = () => {
-  window.mainApi?.send('updateOsdState', { show: show.value })
+  if (typeof show.value === 'boolean') {
+    window.mainApi?.send('updateOsdState', { show: show.value })
+  }
   getFontList()
   window.mainApi?.on('msgHandleScanLocalMusic', (_: any, data: { track: any }) => {
     localTracks.value.push(data.track)

@@ -38,7 +38,15 @@ export default defineConfig(({ mode }) => {
           assetsDir: '.',
           outDir: 'dist/main',
           rollupOptions: {
-            external: ['electron', ...builtinModules, 'better-sqlite3']
+            external: ['electron', ...builtinModules, 'better-sqlite3'],
+            output: {
+              format: 'cjs',
+              // 禁用代码分割，强制打包成单个文件
+              inlineDynamicImports: true,
+              entryFileNames: '[name].js',
+              chunkFileNames: '[name].js',
+              assetFileNames: '[name].[ext]'
+            }
           },
           commonjsOptions: {
             ignoreDynamicRequires: true
